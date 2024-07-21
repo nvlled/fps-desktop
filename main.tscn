@@ -1,0 +1,236 @@
+[gd_scene load_steps=12 format=3 uid="uid://b2porkr112ay"]
+
+[ext_resource type="PackedScene" uid="uid://gbkmu843ybhe" path="res://Assets/Pistol_1.fbx" id="1_mate8"]
+[ext_resource type="Script" path="res://Main.cs" id="1_mlfxq"]
+[ext_resource type="Texture2D" uid="uid://d0cn701h47q3h" path="res://icon.svg" id="3_3kkis"]
+[ext_resource type="Texture2D" uid="uid://c2g84cfdecdby" path="res://Assets/muzzle_05.png" id="4_6a7or"]
+[ext_resource type="AudioStream" uid="uid://buqfpod45pg20" path="res://Assets/9mm Single Isolated.mp3" id="5_urs0n"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mq28f"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_bn0nf"]
+sky_material = SubResource("ProceduralSkyMaterial_mq28f")
+
+[sub_resource type="Environment" id="Environment_kem1i"]
+background_mode = 1
+background_color = Color(0, 0, 0, 0)
+sky = SubResource("Sky_bn0nf")
+tonemap_mode = 2
+
+[sub_resource type="Animation" id="Animation_vr5gc"]
+resource_name = "Fire"
+length = 0.3
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PistolPivot/Pistol:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.03, 0.3),
+"transitions": PackedFloat32Array(0.5, 0.5, 0.5),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.174533), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PistolPivot/Pistol:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.03, 0.3),
+"transitions": PackedFloat32Array(0.5, 0.5, 0.5),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.5, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PistolPivot/Pistol/Sprite3D2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PistolPivot/Pistol/Sprite3D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PistolPivot/Pistol/OmniLight3D:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_l1766"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PistolPivot/Pistol:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PistolPivot/Pistol:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PistolPivot/Pistol/Sprite3D2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PistolPivot/Pistol/Sprite3D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PistolPivot/Pistol/OmniLight3D:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hfnso"]
+_data = {
+"Fire": SubResource("Animation_vr5gc"),
+"RESET": SubResource("Animation_l1766")
+}
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_mlfxq")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.507628, 0.803403, 0.31122, -0.225081, -0.225017, 0.948001, 0.831656, -0.551282, 0.0666061, 0.651852, 1.51653, -2.38474)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kem1i")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.16)
+
+[node name="PistolPivot" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.0871, -1.28009, -0.138785)
+
+[node name="Pistol" parent="PistolPivot" instance=ExtResource("1_mate8")]
+unique_name_in_owner = true
+
+[node name="Sprite3D" type="Sprite3D" parent="PistolPivot/Pistol"]
+transform = Transform3D(-0.998918, 0.0440619, -0.0148291, 0.0440619, 0.795543, -0.604292, -0.0148291, -0.604292, -0.796625, 3.46483, 0.67648, 0.00387645)
+visible = false
+modulate = Color(1, 0.40783, 0, 1)
+texture = ExtResource("4_6a7or")
+
+[node name="Sprite3D2" type="Sprite3D" parent="PistolPivot/Pistol"]
+transform = Transform3D(-0.999951, 0.001974, 0.00964294, 0.00197415, -0.919554, 0.392957, 0.0096429, 0.392957, 0.919506, 3.46483, 0.67648, 0.00387645)
+visible = false
+flip_v = true
+modulate = Color(1, 0.40783, 0, 1)
+axis = 1
+texture = ExtResource("4_6a7or")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="PistolPivot/Pistol"]
+transform = Transform3D(1, -3.1665e-08, 5.32907e-14, 2.98023e-08, 1, -2.10942e-15, -5.68434e-14, 2.33147e-15, 1, 1.75979, 0.635713, -0.0875125)
+visible = false
+light_color = Color(0.939058, 1, 0.401897, 1)
+light_energy = 10.505
+light_indirect_energy = 7.626
+light_size = 0.268
+light_specular = 16.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_hfnso")
+}
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 2.0
+autostart = true
+
+[node name="Control" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Preview" type="TextureRect" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+texture = ExtResource("3_3kkis")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.476204, 0.526614, -1.52054)
+light_energy = 6.334
+light_indirect_energy = 9.01
+light_volumetric_fog_energy = 3.909
+light_size = 0.636
+omni_range = 3.064
+omni_attenuation = 0.420448
+
+[node name="PistolAudio" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_urs0n")
