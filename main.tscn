@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://b2porkr112ay"]
+[gd_scene load_steps=16 format=3 uid="uid://b2porkr112ay"]
 
 [ext_resource type="PackedScene" uid="uid://gbkmu843ybhe" path="res://Assets/Pistol_1.fbx" id="1_mate8"]
 [ext_resource type="Script" path="res://Main.cs" id="1_mlfxq"]
 [ext_resource type="Texture2D" uid="uid://d0cn701h47q3h" path="res://icon.svg" id="3_3kkis"]
 [ext_resource type="Texture2D" uid="uid://c2g84cfdecdby" path="res://Assets/muzzle_05.png" id="4_6a7or"]
 [ext_resource type="AudioStream" uid="uid://buqfpod45pg20" path="res://Assets/9mm Single Isolated.mp3" id="5_urs0n"]
+[ext_resource type="PackedScene" uid="uid://c78m42s3mgt3w" path="res://bullet_hole_window.tscn" id="6_230fh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mq28f"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -19,8 +20,8 @@ background_color = Color(0, 0, 0, 0)
 sky = SubResource("Sky_bn0nf")
 tonemap_mode = 2
 
-[sub_resource type="Animation" id="Animation_vr5gc"]
-resource_name = "Fire"
+[sub_resource type="Animation" id="Animation_8ljxl"]
+resource_name = "BurstFire"
 length = 0.3
 step = 0.01
 tracks/0/type = "value"
@@ -79,6 +80,71 @@ tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_vr5gc"]
+resource_name = "Fire"
+length = 0.4
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PistolPivot/Pistol:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.22, 0.36),
+"transitions": PackedFloat32Array(0.5, 1, 0.5),
+"update": 0,
+"values": [Vector3(-0.959931, 0, 0.174533), Vector3(-0.872665, 0, 0.0872665), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PistolPivot/Pistol:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.22, 0.36),
+"transitions": PackedFloat32Array(0.5, 0.5, 0.5),
+"update": 0,
+"values": [Vector3(0.1, -0.2, -0.2), Vector3(0.1, -0.2, -0.2), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PistolPivot/Pistol/Sprite3D2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.03),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PistolPivot/Pistol/Sprite3D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.03),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PistolPivot/Pistol/OmniLight3D:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.03),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -147,10 +213,71 @@ tracks/4/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_xfmfy"]
+resource_name = "Spin"
+length = 0.8
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PistolPivot/Pistol:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-2),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PistolPivot/Pistol:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -6.28319)]
+}
+
+[sub_resource type="Animation" id="Animation_1lei1"]
+resource_name = "SpinUp"
+length = 0.8
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PistolPivot/Pistol:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-2),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PistolPivot/Pistol:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 6.28319)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hfnso"]
 _data = {
-"Fire": SubResource("Animation_vr5gc"),
-"RESET": SubResource("Animation_l1766")
+"Fire": SubResource("Animation_8ljxl"),
+"Fire2": SubResource("Animation_vr5gc"),
+"RESET": SubResource("Animation_l1766"),
+"SpinDown": SubResource("Animation_xfmfy"),
+"SpinUp": SubResource("Animation_1lei1")
 }
 
 [node name="Main" type="Node3D"]
@@ -234,3 +361,5 @@ omni_attenuation = 0.420448
 [node name="PistolAudio" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("5_urs0n")
+
+[node name="BulletHoleWindow" parent="." instance=ExtResource("6_230fh")]

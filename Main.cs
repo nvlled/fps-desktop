@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 using godot_getnode;
 using SharpHook;
+using MB = SharpHook.Native.MouseButton;
 
-// TODO: add burst fire mode (right-click)
 // TODO: test on windows
 // TODO: add damage effect
 public partial class Main : Node3D
@@ -47,6 +48,7 @@ public partial class Main : Node3D
 
 		var hook = new SimpleGlobalHook(GlobalHookType.Mouse);
 		hook.MousePressed += OnMouseClicked;
+		hook.MouseWheel += OnMouseWheel;
 		hook.RunAsync();
 
 		Callable.From(() =>
@@ -56,14 +58,19 @@ public partial class Main : Node3D
 		}).CallDeferred();
 
 		basePosition = PistolPivot.Position;
-
-		GetWindow().SizeChanged += WindowSizeChanged;
 	}
 
-	private void WindowSizeChanged()
+	private void OnMouseWheel(object sender, MouseWheelHookEventArgs e)
 	{
-		GD.Print(GetWindow().Size);
+		var rotation = e.Data.Rotation;
+		var animation = rotation < 0 ? ActionNameSpinDown : ActionNameSpinUp;
+		if (!(animation == currentSpinAnim && AnimationPlayer.IsPlaying()))
+		{
+			currentSpinAnim = animation;
+			Callable.From(() => AnimationPlayer.Play(animation)).CallDeferred();
+		}
 	}
+
 
 	private void OnTimeOut()
 	{
@@ -118,4 +125,7 @@ public partial class Main : Node3D
 
 
 	static StringName ActionNameFire = "Fire";
+	static StringName ActionNameFire2 = "Fire2";
+	static StringName ActionNameSpinDown = "SpinDown";
+	static StringName ActionNameSpinUp = "SpinUp";
 }
