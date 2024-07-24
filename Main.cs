@@ -6,18 +6,22 @@ using SharpHook;
 using MB = SharpHook.Native.MouseButton;
 
 // TODO: test on windows
-// TODO: add damage effect
+// TODO: slowly fade bullet hole away
 public partial class Main : Node3D
 {
+	const int NUM_SUB_WINDOWS = 10;
 	const float Z_ROT_RANGE = 10;
 	const float X_ROT_RANGE = 30;
 	const float X_MID_ANGLE = 90;
 
 	Vector3 basePosition = Vector3.Zero;
+	PackedScene bulletHoleWindowScene = GD.Load<PackedScene>("res://bullet_hole_window.tscn");
+	StringName currentSpinAnim = ActionNameNone;
+	BulletHoleWindow[] subWindows = new BulletHoleWindow[NUM_SUB_WINDOWS];
+
 
 	[GetNode(Unique: true)] Node3D Pistol;
 	[GetNode(Unique: true)] Node3D PistolPivot;
-	//[GetNode(Unique: true)] GpuParticles3D FireParticles;
 	[GetNode(Unique: true)] AnimationPlayer AnimationPlayer;
 	[GetNode(Unique: true)] Timer Timer;
 	[GetNode(Unique: true)] TextureRect Preview;
@@ -28,7 +32,12 @@ public partial class Main : Node3D
 	{
 		this.GetAnnotatedNodes();
 
-		//FireLight.LightEnergy = 0;
+		for (var i = 0; i < NUM_SUB_WINDOWS; i++)
+		{
+			subWindows[i] = bulletHoleWindowScene.Instantiate<BulletHoleWindow>();
+			AddChild(subWindows[i]);
+		}
+
 
 		// TODO: When I set "No Focus" to true on project settings,
 		// Borderless becomes true and immutable
@@ -94,13 +103,20 @@ public partial class Main : Node3D
 
 	private void OnMouseClicked(object sender, MouseHookEventArgs e)
 	{
-		if (e.Data.Button == SharpHook.Native.MouseButton.Button1)
+		var btn = e.Data.Button;
+		if (btn == MB.Button1 || btn == MB.Button2)
 		{
 			Callable.From(() =>
 			{
-				PistolAudio.Playing = true;
-				AnimationPlayer.Stop();
-				AnimationPlayer.Play(ActionNameFire);
+				Fire(btn == MB.Button1 ? ActionNameFire : ActionNameFire2, new Vector2I(e.Data.X, e.Data.Y));
+			}).CallDeferred();
+		}
+		else if (btn == MB.Button3)
+		{
+			Callable.From(() =>
+			{
+				var animation = GD.Randf() < 0.3 ? ActionNameFire2 : ActionNameFire;
+				BurstFire(animation, new Vector2I(e.Data.X, e.Data.Y));
 			}).CallDeferred();
 		}
 	}
@@ -123,7 +139,37 @@ public partial class Main : Node3D
 		};
 	}
 
+	void Fire(StringName animation, Vector2I mousePos)
+	{
+		PistolAudio.Playing = true;
+		AnimationPlayer.Stop();
+		AnimationPlayer.Play(animation);
 
+		var bulletWindow = subWindows[0];
+		foreach (var win in subWindows)
+		{
+			if (win.LastUpdate < bulletWindow.LastUpdate)
+			{
+				bulletWindow = win;
+			}
+		}
+		bulletWindow.Clear();
+		bulletWindow.Shoot();
+		bulletWindow.Position = mousePos - bulletWindow.Size / 2;
+	}
+
+	async void BurstFire(StringName animation, Vector2I mousePos)
+	{
+		for (var i = 0; i < 3; i++)
+		{
+			Fire(animation, mousePos);
+			var timer = GetTree().CreateTimer(0.10);
+			await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
+		}
+	}
+
+
+	static StringName ActionNameNone = "-";
 	static StringName ActionNameFire = "Fire";
 	static StringName ActionNameFire2 = "Fire2";
 	static StringName ActionNameSpinDown = "SpinDown";

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://c78m42s3mgt3w"]
+
+[ext_resource type="Script" path="res://BulletHoleWindow.cs" id="1_e2ogp"]
+[ext_resource type="PackedScene" uid="uid://cnxwktbr6av57" path="res://bullet_hole_canvas.tscn" id="2_6xmgi"]
+
+[node name="BulletHoleWindow" type="Window"]
+transparent_bg = true
+position = Vector2i(0, 36)
+wrap_controls = true
+borderless = true
+transparent = true
+unfocusable = true
+mouse_passthrough = true
+script = ExtResource("1_e2ogp")
+
+[node name="Canvas" parent="." instance=ExtResource("2_6xmgi")]
+unique_name_in_owner = true
