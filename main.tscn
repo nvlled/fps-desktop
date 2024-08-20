@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://b2porkr112ay"]
 
-[ext_resource type="PackedScene" uid="uid://gbkmu843ybhe" path="res://Assets/Pistol_1.fbx" id="1_mate8"]
+[ext_resource type="PackedScene" uid="uid://215bhh5avt5u" path="res://Assets/Pistol_1.glb" id="1_mate8"]
 [ext_resource type="Script" path="res://Main.cs" id="1_mlfxq"]
 [ext_resource type="Texture2D" uid="uid://d0cn701h47q3h" path="res://icon.svg" id="3_3kkis"]
 [ext_resource type="Texture2D" uid="uid://c2g84cfdecdby" path="res://Assets/muzzle_05.png" id="4_6a7or"]
